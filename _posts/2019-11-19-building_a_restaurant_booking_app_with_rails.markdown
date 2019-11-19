@@ -35,6 +35,7 @@ end
 
 And here's what I have in my schema now: 
 
+```
 create_table "restaurants", force: :cascade do |t|
     t.string "name"
     t.string "city"
@@ -45,6 +46,7 @@ create_table "restaurants", force: :cascade do |t|
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
   end
+```
 
 I removed the description and opening hours as they were distracting me from getting the app to work.
 
