@@ -1,7 +1,7 @@
 ---
 layout: post
 title:      "Building a Restaurant Booking App with Rails "
-date:       2019-11-19 21:14:57 +0000
+date:       2019-11-19 16:14:59 -0500
 permalink:  building_a_restaurant_booking_app_with_rails
 ---
 
