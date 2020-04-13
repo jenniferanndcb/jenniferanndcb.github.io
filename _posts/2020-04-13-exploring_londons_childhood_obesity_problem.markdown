@@ -1,7 +1,7 @@
 ---
 layout: post
 title:      "Exploring London's Childhood Obesity Problem"
-date:       2020-04-13 13:42:42 +0000
+date:       2020-04-13 09:42:43 -0400
 permalink:  exploring_londons_childhood_obesity_problem
 ---
 
@@ -20,11 +20,53 @@ Thinking in terms of *actions* and *reducers* in Redux also helped me understand
 
 A crude representation of the structure goes like this: 
 
-![](https://photos.google.com/search/_tra_/photo/AF1QipNB3G8VLH7wQsX2KrZtuq5UAN1Y_2rAK04sshl0)
+* Action fetches data from API and is called after componentDidMount()
+* This sets off the Reducer which takes the old state and turns it into the new state 
+* New state is held in the Store which now contains the API data (i.e. the London Childhood Obesity dataset broken down by London Boroughs and age)
+* This data can be access by component containers as props by using mapStateToProps() 
 
 Sticking to the topic of convention and organising code, it also helped to keep reminding myself that while building my React components, **only the containers should know Redux**. Components can access the data by passing the data that we need down as props as per below:
 
-![](https://photos.google.com/search/_tra_/photo/AF1QipP4C9rNDdKBjt736mmMO0Vsgfb1VgE6-_09fnLD)
+```
+class ChartsContainer extends React.Component {
+  componentDidMount() {
+    this.props.fetchLocalAuthData();
+  }
+
+  render() {
+    return (
+      <div className="section-charts-container">
+        <div className="page-title">
+          <h1>Prevalance of Childhood Obesity in London 2018/19</h1>
+          <p>The chart below shows the average prevalence of childhood obesity
+          across London in %. Find out more about the prevalence of childhood
+          obesity in specific London Boroughs by selecting a Local Authority
+          below.</p>
+        </div>
+        <div>
+          {this.props.localAuthData.length > 0 && (
+            <AreaDropdown londonData={this.props.localAuthData} />
+          )}
+        </div>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    localAuthData: state.localAuthData.localAuthData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchLocalAuthData: () => dispatch(fetchLocalAuthData()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChartsContainer);
+```
 
 **Conclusion**
 
